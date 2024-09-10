@@ -9,7 +9,9 @@ const PostsLists = ({posts}: Props) => {
   return (
     <>
         {posts.map((post) =>(
-            <PostItem key={post._raw.flattenedPath} post={post} />  
+            <PostItem 
+            key={post._raw.flattenedPath} 
+            post={post} />  
         ))} 
     </>
   );

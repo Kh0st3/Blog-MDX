@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { allPosts } from "contentlayer/generated";
 import { useMDXComponent } from "next-contentlayer/hooks";
+import ButtonBack from "@/components/ButtonBack";
 
 interface Props {
   params: {
@@ -9,18 +10,7 @@ interface Props {
 }
 
 export const generateStaticParams = () => {
-  // Manera de realizarlo manualmente
-  // return [
-  //   {
-  //     slug: "01-Blog",
-  //   },
-  //   {
-  //     slug: "02-Blog",
-  //   },
-  //   {
-  //     slug: "03-Blog",
-  //   }
-  // ]
+
   return allPosts.map((post) => ({
       slug: post._raw.flattenedPath
 }));
@@ -49,17 +39,24 @@ const PostLayout = ({params} : Props) => {
       MDXContent = useMDXComponent(post.body.code)
   }
   return (
-    <div>
-    <h1 className="text-center my-4 text-3xl">{post.title}</h1>
-      <time>
-        {new Date(post.date).toLocaleDateString("es-ES", {
+    <>
+      <h1 className="text-center text-2xl font-bold uppercase">{post.title}</h1>
+      <div className="mb-8 text-center">
+        <time className="text-gray-700">
+          {new Date(post.date).toLocaleDateString("es-ES", {
             year: "numeric",
             month: "long",
             day: "numeric",
-        })}
-      </time>
+          })}
+        </time>
+      </div>
+
       <MDXContent />
-    </div>
+
+      <div className="mt-8 text-center">
+        <ButtonBack>Volver</ButtonBack>
+      </div>
+    </>
   );
 };
 
